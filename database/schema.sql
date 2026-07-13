@@ -1,21 +1,18 @@
--- schema.sql - هيكل قاعدة البيانات
+-- schema.sql - هيكل قاعدة البيانات مع بيانات تجريبية
 
--- تفعيل المفاتيح الخارجية
 PRAGMA foreign_keys = ON;
 
--- جدول الصلاحيات
 CREATE TABLE IF NOT EXISTS roles (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT NOT NULL UNIQUE,   -- admin, employee, accountant, supervisor
+    name TEXT NOT NULL UNIQUE,
     description TEXT,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
--- جدول المستخدمين
 CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     username TEXT NOT NULL UNIQUE,
-    password TEXT NOT NULL,      -- سيتم تشفيرها لاحقاً
+    password TEXT NOT NULL,
     full_name TEXT NOT NULL,
     email TEXT,
     phone TEXT,
@@ -27,7 +24,6 @@ CREATE TABLE IF NOT EXISTS users (
     FOREIGN KEY (role_id) REFERENCES roles(id) ON DELETE RESTRICT
 );
 
--- جدول سجل النشاطات
 CREATE TABLE IF NOT EXISTS activity_logs (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id INTEGER,
@@ -38,7 +34,6 @@ CREATE TABLE IF NOT EXISTS activity_logs (
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
 );
 
--- جدول الإعدادات
 CREATE TABLE IF NOT EXISTS settings (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     key TEXT NOT NULL UNIQUE,
@@ -48,30 +43,24 @@ CREATE TABLE IF NOT EXISTS settings (
     updated_at DATETIME
 );
 
--- إدراج الصلاحيات الافتراضية
 INSERT OR IGNORE INTO roles (id, name, description) VALUES
 (1, 'admin', 'مدير النظام - صلاحية كاملة'),
 (2, 'employee', 'موظف - صلاحية محدودة'),
 (3, 'accountant', 'محاسب - صلاحية مالية'),
 (4, 'supervisor', 'مشرف - صلاحية إشرافية');
 
--- إدراج مستخدم مدير افتراضي (كلمة المرور: admin123)
--- سيتم تشفيرها لاحقاً، لكن حالياً تخزين نصي مؤقت
 INSERT OR IGNORE INTO users (username, password, full_name, role_id) VALUES
 ('admin', 'admin123', 'المدير العام', 1);
 
--- إدراج إعدادات افتراضية
 INSERT OR IGNORE INTO settings (key, value, category) VALUES
 ('company_name', 'شركة الأعمال المتقدمة', 'general'),
 ('company_phone', '+966 50 000 0000', 'general'),
 ('company_email', 'info@company.com', 'general'),
 ('currency', 'ريال سعودي', 'general'),
 ('tax_rate', '15', 'general');
--- =====================================================
--- الجداول الأساسية للبيانات (العملاء - الخدمات - الموظفين - الطلبات)
--- =====================================================
 
--- جدول العملاء
+-- ===== جداول البيانات الأساسية =====
+
 CREATE TABLE IF NOT EXISTS customers (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL,
@@ -87,7 +76,6 @@ CREATE TABLE IF NOT EXISTS customers (
     updated_at DATETIME
 );
 
--- جدول الخدمات
 CREATE TABLE IF NOT EXISTS services (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL,
@@ -101,7 +89,6 @@ CREATE TABLE IF NOT EXISTS services (
     updated_at DATETIME
 );
 
--- جدول الموظفين
 CREATE TABLE IF NOT EXISTS employees (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL,
@@ -116,10 +103,9 @@ CREATE TABLE IF NOT EXISTS employees (
     updated_at DATETIME
 );
 
--- جدول الطلبات
 CREATE TABLE IF NOT EXISTS orders (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    order_number TEXT NOT NULL UNIQUE,  -- رقم تلقائي مثل ORD-2026-001
+    order_number TEXT NOT NULL UNIQUE,
     customer_id INTEGER,
     service_id INTEGER,
     employee_id INTEGER,
@@ -131,9 +117,9 @@ CREATE TABLE IF NOT EXISTS orders (
     total REAL DEFAULT 0,
     paid REAL DEFAULT 0,
     remaining REAL DEFAULT 0,
-    status TEXT DEFAULT 'pending',  -- pending, in_progress, completed, cancelled
+    status TEXT DEFAULT 'pending',
     completion_percentage INTEGER DEFAULT 0,
-    priority TEXT DEFAULT 'medium',  -- low, medium, high, urgent
+    priority TEXT DEFAULT 'medium',
     notes TEXT,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME,
@@ -142,35 +128,28 @@ CREATE TABLE IF NOT EXISTS orders (
     FOREIGN KEY (employee_id) REFERENCES employees(id) ON DELETE SET NULL
 );
 
--- إنشاء فهرس لسرعة البحث
 CREATE INDEX IF NOT EXISTS idx_orders_customer ON orders(customer_id);
 CREATE INDEX IF NOT EXISTS idx_orders_status ON orders(status);
 CREATE INDEX IF NOT EXISTS idx_orders_date ON orders(created_at);
 
--- =====================================================
--- بيانات تجريبية للاختبار
--- =====================================================
+-- ===== بيانات تجريبية =====
 
--- إضافة عملاء وهميين
 INSERT OR IGNORE INTO customers (id, name, phone, email, company, country, city, created_at) VALUES
 (1, 'أحمد محمد', '0501111111', 'ahmed@example.com', 'شركة التقنية المتقدمة', 'السعودية', 'الرياض', datetime('now', '-30 days')),
 (2, 'سارة علي', '0502222222', 'sara@example.com', 'مؤسسة التصميم الإبداعي', 'السعودية', 'جدة', datetime('now', '-15 days')),
 (3, 'خالد عبدالله', '0503333333', 'khaled@example.com', 'شركة الحلول الذكية', 'الإمارات', 'دبي', datetime('now', '-5 days'));
 
--- إضافة خدمات وهمية
 INSERT OR IGNORE INTO services (id, name, description, default_price, duration_days, department) VALUES
 (1, 'تصميم موقع إلكتروني', 'تصميم موقع متكامل مع واجهة مستخدم احترافية', 5000, 14, 'التصميم'),
 (2, 'تطوير تطبيق جوال', 'تطبيق iOS و Android باستخدام Flutter', 8000, 21, 'البرمجة'),
 (3, 'استضافة سحابية', 'استضافة سنوية مع دعم فني', 1200, 1, 'البنية التحتية'),
 (4, 'تحسين محركات البحث (SEO)', 'تحسين ظهور الموقع في محركات البحث', 3000, 30, 'التسويق');
 
--- إضافة موظفين وهميين
 INSERT OR IGNORE INTO employees (id, name, position, phone, email, salary, commission_rate) VALUES
 (1, 'محمد الدوسري', 'مطور برمجيات', '0501234567', 'mohamed@company.com', 8000, 5),
 (2, 'نورة الشمري', 'مصممة UI/UX', '0507654321', 'noura@company.com', 7000, 4),
 (3, 'عبدالله الغامدي', 'مدير مشاريع', '0509876543', 'abdullah@company.com', 10000, 7);
 
--- إضافة طلبات وهمية (بعضها مكتمل، بعضها جاري، بعضها متأخر)
 INSERT OR IGNORE INTO orders (
     order_number, customer_id, service_id, employee_id, 
     start_date, delivery_date, price, discount, tax, total, paid, remaining, 
