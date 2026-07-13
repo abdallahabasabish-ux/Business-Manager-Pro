@@ -1,4 +1,4 @@
-/* style.css - الأنماط الأساسية مع أيقونات Font Awesome */
+/* style.css - الأنماط الأساسية */
 
 * {
     margin: 0;
@@ -240,7 +240,6 @@ body {
     margin-left: 4px;
 }
 
-/* ===== أنماط مساعدة ===== */
 @keyframes fadeUp {
     from {
         opacity: 0;
@@ -252,7 +251,7 @@ body {
     }
 }
 
-/* ===== وضع الداكن (سيتم تفعيله لاحقاً) ===== */
+/* ===== الوضع الداكن (جزئي، سيتم إكماله) ===== */
 .dark-mode {
     background-color: #0f172a;
     color: #f1f5f9;
@@ -274,4 +273,3 @@ body {
 .dark-mode .checkbox-label {
     color: #94a3b8;
 }
-/* ... سيتم إكمال الداكن في الخطوات القادمة */
