@@ -1,0 +1,414 @@
+/* customers.css - أنماط خاصة بصفحة العملاء */
+
+/* ===== أدوات التحكم ===== */
+.page-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 25px;
+    background: #ffffff;
+    padding: 15px 20px;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+
+.search-box {
+    display: flex;
+    align-items: center;
+    background: #f1f5f9;
+    border-radius: 8px;
+    padding: 0 15px;
+    flex: 1;
+    min-width: 200px;
+    border: 2px solid transparent;
+    transition: border-color 0.2s, background 0.2s;
+}
+
+.search-box:focus-within {
+    border-color: #ff7a00;
+    background: #ffffff;
+}
+
+.search-box i {
+    color: #94a3b8;
+    font-size: 16px;
+}
+
+.search-box input {
+    border: none;
+    background: transparent;
+    padding: 10px 12px;
+    font-family: 'Cairo', sans-serif;
+    font-size: 15px;
+    width: 100%;
+    outline: none;
+    color: #1e293b;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.btn-primary-sm {
+    background: #ff7a00;
+    color: #ffffff;
+    border: none;
+    padding: 8px 18px;
+    border-radius: 8px;
+    font-family: 'Cairo', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: background 0.2s;
+}
+
+.btn-primary-sm:hover {
+    background: #e66b00;
+}
+
+.btn-secondary-sm {
+    background: #f1f5f9;
+    color: #475569;
+    border: 1px solid #e2e8f0;
+    padding: 8px 18px;
+    border-radius: 8px;
+    font-family: 'Cairo', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s;
+}
+
+.btn-secondary-sm:hover {
+    background: #e2e8f0;
+    border-color: #cbd5e1;
+}
+
+/* ===== أزرار الإجراءات في الجدول ===== */
+.btn-action {
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 4px 8px;
+    border-radius: 6px;
+    transition: all 0.2s;
+}
+
+.btn-edit {
+    color: #2563eb;
+}
+.btn-edit:hover {
+    background: #dbeafe;
+}
+
+.btn-delete {
+    color: #dc2626;
+}
+.btn-delete:hover {
+    background: #fef2f2;
+}
+
+/* ===== المودال ===== */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    padding: 20px;
+    animation: fadeIn 0.3s ease;
+}
+
+.modal-overlay.open {
+    display: flex;
+}
+
+.modal-box {
+    background: #ffffff;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 700px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 25px 60px rgba(0,0,0,0.3);
+    animation: slideUp 0.3s ease;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 25px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.modal-header h3 {
+    font-size: 20px;
+    font-weight: 700;
+    color: #111827;
+}
+
+.modal-header h3 i {
+    color: #ff7a00;
+    margin-left: 8px;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: #94a3b8;
+    cursor: pointer;
+    padding: 0 5px;
+    transition: color 0.2s;
+}
+
+.modal-close:hover {
+    color: #dc2626;
+}
+
+.modal-form {
+    padding: 25px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 5px;
+}
+
+.modal-form .form-group {
+    margin-bottom: 15px;
+}
+
+.modal-form .form-group label {
+    font-weight: 600;
+    font-size: 14px;
+    color: #1e293b;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.modal-form .form-group label i {
+    color: #ff7a00;
+    margin-left: 5px;
+    width: 18px;
+}
+
+.required {
+    color: #dc2626;
+    font-weight: 700;
+}
+
+.modal-form .form-group input,
+.modal-form .form-group textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-family: 'Cairo', sans-serif;
+    font-size: 15px;
+    transition: border-color 0.2s;
+    background: #f8fafc;
+}
+
+.modal-form .form-group input:focus,
+.modal-form .form-group textarea:focus {
+    outline: none;
+    border-color: #ff7a00;
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(255, 122, 0, 0.1);
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 10px;
+    padding-top: 15px;
+    border-top: 1px solid #f1f5f9;
+}
+
+.btn-secondary {
+    background: #f1f5f9;
+    color: #475569;
+    border: 1px solid #e2e8f0;
+    padding: 10px 25px;
+    border-radius: 8px;
+    font-family: 'Cairo', sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-secondary:hover {
+    background: #e2e8f0;
+}
+
+.btn-primary {
+    background: #ff7a00;
+    color: #ffffff;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 8px;
+    font-family: 'Cairo', sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: background 0.2s;
+}
+
+.btn-primary:hover {
+    background: #e66b00;
+}
+
+/* ===== رسالة التنبيه (Toast) ===== */
+.toast-message {
+    position: fixed;
+    bottom: 30px;
+    left: 30px;
+    background: #111827;
+    color: #ffffff;
+    padding: 14px 24px;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 600;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    z-index: 99999;
+    border-right: 5px solid #ff7a00;
+    animation: slideIn 0.4s ease;
+    max-width: 400px;
+}
+
+.toast-message.success {
+    border-right-color: #22c55e;
+}
+.toast-message.error {
+    border-right-color: #ef4444;
+}
+
+/* ===== أنماط مساعدة ===== */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* ===== الوضع الداكن ===== */
+.dark-mode .page-controls {
+    background: #1e293b;
+    border-color: #334155;
+}
+
+.dark-mode .search-box {
+    background: #0f172a;
+}
+.dark-mode .search-box:focus-within {
+    background: #1e293b;
+}
+.dark-mode .search-box input {
+    color: #f1f5f9;
+}
+.dark-mode .search-box i {
+    color: #64748b;
+}
+
+.dark-mode .btn-secondary-sm {
+    background: #1e293b;
+    color: #94a3b8;
+    border-color: #334155;
+}
+.dark-mode .btn-secondary-sm:hover {
+    background: #334155;
+}
+
+.dark-mode .modal-box {
+    background: #1e293b;
+}
+.dark-mode .modal-header {
+    border-bottom-color: #334155;
+}
+.dark-mode .modal-header h3 {
+    color: #f1f5f9;
+}
+.dark-mode .modal-form .form-group label {
+    color: #cbd5e1;
+}
+.dark-mode .modal-form .form-group input,
+.dark-mode .modal-form .form-group textarea {
+    background: #0f172a;
+    border-color: #334155;
+    color: #f1f5f9;
+}
+.dark-mode .modal-form .form-group input:focus,
+.dark-mode .modal-form .form-group textarea:focus {
+    background: #1e293b;
+    border-color: #ff7a00;
+}
+.dark-mode .modal-actions {
+    border-top-color: #334155;
+}
+.dark-mode .btn-secondary {
+    background: #0f172a;
+    color: #94a3b8;
+    border-color: #334155;
+}
+.dark-mode .btn-secondary:hover {
+    background: #334155;
+}
+
+.dark-mode .toast-message {
+    background: #1e293b;
+    color: #f1f5f9;
+}
+
+.dark-mode .btn-edit:hover {
+    background: #1e293b;
+}
+.dark-mode .btn-delete:hover {
+    background: #1e293b;
+}
