@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إدارة العملاء - Business Manager Pro</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="../css/customers.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- ===== الشريط الجانبي ===== -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <i class="fas fa-chart-pie logo-icon"></i>
+                    <h2>Business <span>Pro</span></h2>
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="dashboard.html"><i class="fas fa-th-large"></i> <span>لوحة التحكم</span></a></li>
+                    <li class="active"><a href="customers.html"><i class="fas fa-users"></i> <span>العملاء</span></a></li>
+                    <li><a href="#"><i class="fas fa-cogs"></i> <span>الخدمات</span></a></li>
+                    <li><a href="#"><i class="fas fa-user-tie"></i> <span>الموظفين</span></a></li>
+                    <li><a href="#"><i class="fas fa-clipboard-list"></i> <span>الطلبات</span></a></li>
+                    <li><a href="#"><i class="fas fa-file-invoice-dollar"></i> <span>الفواتير</span></a></li>
+                    <li><a href="#"><i class="fas fa-chart-bar"></i> <span>التقارير</span></a></li>
+                    <li><a href="#"><i class="fas fa-cog"></i> <span>الإعدادات</span></a></li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <button id="logoutBtn" class="btn-logout"><i class="fas fa-sign-out-alt"></i> تسجيل الخروج</button>
+            </div>
+        </aside>
+
+        <!-- ===== المحتوى الرئيسي ===== -->
+        <main class="main-content">
+            <!-- الشريط العلوي -->
+            <header class="top-header">
+                <div class="header-left">
+                    <button id="toggleSidebar" class="btn-toggle"><i class="fas fa-bars"></i></button>
+                    <h1>إدارة العملاء</h1>
+                </div>
+                <div class="header-right">
+                    <button class="btn-notification" id="notifBtn">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge" id="notifBadge">3</span>
+                    </button>
+                    <button class="btn-darkmode" id="darkModeToggle"><i class="fas fa-moon"></i></button>
+                    <div class="user-profile">
+                        <i class="fas fa-user-circle user-avatar"></i>
+                        <span id="userDisplayName">المدير العام</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                </div>
+            </header>
+
+            <!-- ===== أدوات التحكم ===== -->
+            <div class="page-controls">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="ابحث بالاسم، الهاتف، أو البريد...">
+                </div>
+                <div class="action-buttons">
+                    <button class="btn-primary-sm" id="addCustomerBtn"><i class="fas fa-plus"></i> إضافة عميل</button>
+                    <button class="btn-secondary-sm" id="importBtn"><i class="fas fa-file-import"></i> استيراد</button>
+                    <button class="btn-secondary-sm" id="exportBtn"><i class="fas fa-file-export"></i> تصدير</button>
+                    <input type="file" id="fileInput" accept=".csv" style="display:none;">
+                </div>
+            </div>
+
+            <!-- ===== جدول العملاء ===== -->
+            <div class="table-card">
+                <div class="table-responsive">
+                    <table class="table-modern" id="customersTable">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>الاسم</th>
+                                <th>الهاتف</th>
+                                <th>البريد</th>
+                                <th>الشركة</th>
+                                <th>عدد الطلبات</th>
+                                <th>المدفوع</th>
+                                <th>المتبقي</th>
+                                <th>الإجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="customersBody">
+                            <!-- يتم تعبئتها بواسطة JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- ===== نافذة منبثقة (مودال) لإضافة / تعديل العميل ===== -->
+    <div class="modal-overlay" id="customerModal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3 id="modalTitle"><i class="fas fa-user-plus"></i> إضافة عميل جديد</h3>
+                <button class="modal-close" id="closeModal"><i class="fas fa-times"></i></button>
+            </div>
+            <form id="customerForm" class="modal-form">
+                <input type="hidden" id="customerId">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label><i class="fas fa-user"></i> الاسم <span class="required">*</span></label>
+                        <input type="text" id="custName" placeholder="أدخل الاسم الكامل" required>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-phone"></i> الهاتف</label>
+                        <input type="text" id="custPhone" placeholder="أدخل رقم الهاتف">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label><i class="fas fa-envelope"></i> البريد الإلكتروني</label>
+                        <input type="email" id="custEmail" placeholder="example@domain.com">
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-building"></i> الشركة</label>
+                        <input type="text" id="custCompany" placeholder="اسم الشركة">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label><i class="fas fa-globe"></i> الدولة</label>
+                        <input type="text" id="custCountry" placeholder="الدولة">
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-city"></i> المدينة</label>
+                        <input type="text" id="custCity" placeholder="المدينة">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-map-pin"></i> العنوان</label>
+                    <input type="text" id="custAddress" placeholder="العنوان التفصيلي">
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-sticky-note"></i> ملاحظات</label>
+                    <textarea id="custNotes" rows="3" placeholder="ملاحظات إضافية عن العميل"></textarea>
+                </div>
+                <!-- حقل الصورة (سنضيفه لاحقاً بشكل متقدم) -->
+                <div class="form-group">
+                    <label><i class="fas fa-image"></i> صورة العميل (رابط)</label>
+                    <input type="text" id="custImage" placeholder="رابط الصورة (اختياري)">
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary" id="cancelModal">إلغاء</button>
+                    <button type="submit" class="btn-primary" id="saveCustomerBtn"><i class="fas fa-save"></i> حفظ</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ===== رسائل التنبيه ===== -->
+    <div id="toastMessage" class="toast-message" style="display:none;"></div>
+
+    <script src="../js/customers.js"></script>
+    <script>
+        // نمرر نفس دوال السايدبار والداكن من dashboard.js، لكن سنعيد تعريفها هنا لتكون مستقلة
+        // لكننا سنستدعي دوال من customers.js
+    </script>
+</body>
+</html>
