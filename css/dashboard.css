@@ -535,4 +535,8 @@
     .stats-grid {
         grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
     }
+    /* دعم الصفحات الفرعية */
+.main-content .table-card {
+    margin-top: 0;
+   }
 }
