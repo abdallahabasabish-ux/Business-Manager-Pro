@@ -7,13 +7,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/dashboard.css">
-    <!-- Chart.js للرسوم البيانية -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="app-container">
-        <!-- ===== الشريط الجانبي ===== -->
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
                 <div class="logo">
@@ -38,9 +36,7 @@
             </div>
         </aside>
 
-        <!-- ===== المحتوى الرئيسي ===== -->
         <main class="main-content">
-            <!-- الشريط العلوي -->
             <header class="top-header">
                 <div class="header-left">
                     <button id="toggleSidebar" class="btn-toggle"><i class="fas fa-bars"></i></button>
@@ -60,7 +56,6 @@
                 </div>
             </header>
 
-            <!-- ===== قسم الإحصائيات (البطاقات) ===== -->
             <section class="stats-grid">
                 <div class="stat-card">
                     <div class="stat-icon" style="background: #eef2ff; color:#4f46e5;"><i class="fas fa-users"></i></div>
@@ -106,7 +101,6 @@
                 </div>
             </section>
 
-            <!-- ===== الرسم البياني + التنبيهات ===== -->
             <section class="charts-alerts">
                 <div class="chart-container">
                     <div class="card-header">
@@ -126,7 +120,6 @@
                 </div>
             </section>
 
-            <!-- ===== جداول آخر الطلبات والعملاء ===== -->
             <section class="tables-grid">
                 <div class="table-card">
                     <div class="card-header">
@@ -143,9 +136,7 @@
                                     <th>الحالة</th>
                                 </tr>
                             </thead>
-                            <tbody id="recentOrdersBody">
-                                <!-- يتم تعبئتها بواسطة JavaScript -->
-                            </tbody>
+                            <tbody id="recentOrdersBody"></tbody>
                         </table>
                     </div>
                 </div>
@@ -164,9 +155,7 @@
                                     <th>الشركة</th>
                                 </tr>
                             </thead>
-                            <tbody id="recentCustomersBody">
-                                <!-- يتم تعبئتها بواسطة JavaScript -->
-                            </tbody>
+                            <tbody id="recentCustomersBody"></tbody>
                         </table>
                     </div>
                 </div>
@@ -175,6 +164,5 @@
     </div>
 
     <script src="../js/dashboard.js"></script>
-    <script src="../js/renderer.js"></script>
 </body>
 </html>
