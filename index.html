@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Manager Pro - تشغيل تجريبي</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* تنسيق رسالة التنبيه في الأعلى */
+        .demo-banner {
+            background: #fef3c7;
+            border-bottom: 3px solid #f59e0b;
+            padding: 12px 20px;
+            text-align: center;
+            font-weight: 600;
+            color: #92400e;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            border-radius: 8px 8px 0 0;
+            margin: -40px -35px 0 -35px; /* لتمتد على عرض الصندوق */
+        }
+        .demo-banner i {
+            font-size: 20px;
+        }
+        .demo-banner code {
+            background: #ffffff;
+            padding: 2px 10px;
+            border-radius: 4px;
+            font-family: monospace;
+            color: #dc2626;
+            direction: ltr;
+        }
+        /* تعديل المسافة العلوية للصندوق */
+        .login-box {
+            padding-top: 55px;
+        }
+        @media (max-width: 500px) {
+            .demo-banner {
+                margin: -20px -20px 0 -20px;
+                font-size: 13px;
+                flex-wrap: wrap;
+            }
+            .login-box {
+                padding-top: 35px;
+            }
+        }
+    </style>
+</head>
+<body class="login-page">
+    <div class="login-container">
+        <div class="login-box">
+            <!-- رسالة توضيحية -->
+            <div class="demo-banner">
+                <i class="fas fa-info-circle"></i>
+                هذه واجهة تجريبية للتصميم. لتشغيل التطبيق الكامل، استخدم الأمر 
+                <code>npm start</code> في المحطة الطرفية.
+            </div>
+
+            <div class="login-header" style="margin-top: 20px;">
+                <div class="logo">
+                    <i class="fas fa-chart-pie logo-icon"></i>
+                    <h1>Business Manager <span>Pro</span></h1>
+                </div>
+                <p class="subtitle"><i class="fas fa-sign-in-alt"></i> تسجيل الدخول إلى لوحة التحكم</p>
+            </div>
+
+            <form id="loginForm" class="login-form">
+                <div class="form-group">
+                    <label for="username"><i class="fas fa-user"></i> اسم المستخدم</label>
+                    <input type="text" id="username" placeholder="أدخل اسم المستخدم" value="admin" disabled>
+                    <i class="fas fa-user input-icon"></i>
+                </div>
+                <div class="form-group">
+                    <label for="password"><i class="fas fa-lock"></i> كلمة المرور</label>
+                    <input type="password" id="password" placeholder="أدخل كلمة المرور" value="admin123" disabled>
+                    <i class="fas fa-lock input-icon"></i>
+                </div>
+                <div class="form-options">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="rememberMe" disabled> 
+                        <i class="fas fa-check-circle"></i> تذكرني
+                    </label>
+                    <a href="#" class="forgot-link" style="pointer-events:none; opacity:0.5;">
+                        <i class="fas fa-key"></i> نسيت كلمة المرور؟
+                    </a>
+                </div>
+                <button type="button" class="btn-primary" id="demoBtn" 
+                        style="background: #64748b; cursor: not-allowed; opacity:0.8;">
+                    <i class="fas fa-sign-in-alt"></i> تسجيل الدخول (معطل للتجربة)
+                </button>
+                <div style="text-align:center; margin-top:12px; font-size:13px; color:#94a3b8;">
+                    <i class="fas fa-desktop"></i> 
+                    لتجربة التطبيق الكامل، شغّل <code style="background:#f1f5f9; padding:2px 8px; border-radius:4px; direction:ltr;">npm start</code>
+                </div>
+            </form>
+
+            <div class="login-footer">
+                <p><i class="fas fa-copyright"></i> 2026 Business Manager Pro - جميع الحقوق محفوظة</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // رسالة توضيحية عند النقر على زر الدخول
+        document.getElementById('demoBtn').addEventListener('click', function() {
+            alert('🔔 هذا تطبيق سطح مكتب يعمل عبر Electron.\nلتشغيله، افتح المحطة الطرفية في مجلد المشروع ونفذ:\n\nnpm start');
+        });
+    </script>
+</body>
+</html>
